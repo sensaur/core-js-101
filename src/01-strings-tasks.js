@@ -200,8 +200,38 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let result = '';
+  for (let r = 1; r <= height; r += 1) {
+    let row = '';
+    for (let c = 1; c <= width; c += 1) {
+      if (r === 1) {
+        if (c === 1) {
+          row += '┌';
+        } else if (c === width) {
+          row += '┐\n';
+        } else {
+          row += '─';
+        }
+      } else if (r === height) {
+        if (c === 1) {
+          row += '└';
+        } else if (c === width) {
+          row += '┘\n';
+        } else {
+          row += '─';
+        }
+      } else if (c === 1) {
+        row += '│';
+      } else if (c === width) {
+        row += '│\n';
+      } else {
+        row += ' ';
+      }
+    }
+    result += row;
+  }
+  return result;
 }
 
 
@@ -221,8 +251,19 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  let result = '';
+  for (let i = 0; i < str.length; i += 1) {
+    const index = alphabet.indexOf(str[i].toLowerCase());
+    if (index > -1) {
+      const letter = index < 13 ? alphabet[index + 13] : alphabet[index - 13];
+      result += str[i] === str[i].toLowerCase() ? letter : letter.toUpperCase();
+    } else {
+      result += str[i];
+    }
+  }
+  return result;
 }
 
 /**
@@ -238,8 +279,8 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  return Object.prototype.toString.call(value) === '[object String]';
 }
 
 
